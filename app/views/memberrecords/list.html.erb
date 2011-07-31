@@ -1,0 +1,47 @@
+<% if session[:member_id] %>
+<%= session[:member_id]  -%>
+<% end %>
+
+<% for c in Member.find(:all, :readonly=> true, :conditions => ['member_id = ?',session[:member_id]])  %>
+
+<p>
+   Member Name<br/>
+     <%= c.member_name  %>
+</p>
+ 
+<p>
+   Member Address<br/>
+     <%= c.member_address  %>
+     
+</p>
+ 
+<p>
+  <div>   
+  <ul>Selected Polo Shirt(s):
+  
+  <% for shirt in Item.find(:all) %>
+  <% myBool = Order.exists?(['member_id = ? and item_id = ?', c.member_id , shirt.item_id])  %>
+  <% if myBool %>
+     <li><%= shirt.item_description %>&nbsp;&nbsp;Size:&nbsp;&nbsp;
+     	<% mySizeId = Order.find(:first, :readonly=>true, :conditions=> ['member_id = ? and item_id = ?', c.member_id , shirt.item_id]).size_id %>
+<%= Size.find(:first, 
+              :conditions => 
+              ['size_id = ?', mySizeId]).size  %>
+     	
+     	
+     </li>
+     <% end %>
+          
+   <% end %>
+   
+  </ul>
+</div>
+<% if Order.exists?(['member_id = ?', c.member_id]) %>
+<p><%= link_to "Edit", :action=>'edit', :id=> c.member_id %></p>
+<% else %>
+<p><%= link_to "Add Items", :action=>'newitems', :id=> c.member_id %></p>
+<% end %>
+<% end %>
+        
+
+

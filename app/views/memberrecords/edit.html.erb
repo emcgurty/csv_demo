@@ -1,0 +1,48 @@
+
+<% if flash[:notice] %>
+<%= flash[:notice]  -%>
+<% end %>
+
+
+<% if session[:member_id] %>
+<%= session[:member_id]  -%>
+<% end %>
+
+<% if @memberorders.blank?  %>
+<%= "Sorry, Charlie, only the best fish gets to be...." %>
+<% else %>
+<% myID = @memberorders[0].member_id %>
+<%= form_for(:memberorders, :url => {:controller=>'memberrecords', :action => :'create', :id=>@memberorders[0].member_id}, :html => {:method=>'post'}) do |c| %>   
+<% @mr = Member.find(:first, :conditions => ['member_id = ?', @memberorders[0].member_id]) %>
+<p><%= c.hidden_field "created_item", {:value=>@mr.created_item} %></p>
+<p><%= c.text_field "member_name", {:value=>@mr.member_name} %></p>
+<p><%= c.text_field "member_address", {:value=>@mr.member_address} %></p>
+<p>
+   <%  @mysizes = Size.all.collect {|p| [ p.size, p.size_id ] } %>
+   <div>   
+  <ul>Check to select polo-shirt item:&nbsp;
+  <% i =0 %>
+  <% for shirt in Item.find(:all) %>
+  <% isShirtThere = Order.exists?(['member_id = ? and item_id = ?', myID , shirt.item_id]) %>
+  <li> <%= check_box_tag "memberrecords[item_id][]", shirt.item_id, isShirtThere %>&nbsp;
+          <%= shirt.item_description %>&nbsp;&nbsp;
+          <% if isShirtThere %>
+          <%= select(:size, "size_id" + shirt.item_id.to_s ,  @mysizes, { :prompt => "Select Size" , :selected=> @memberorders[i].size_id}) %>
+          <% i = i +1 %>
+          <% else %>
+          <%= select(:size, "size_id" + shirt.item_id.to_s ,  @mysizes, { :prompt => "Select Size"  }) %>
+          <% end %>
+           
+        </li>
+        
+<% end %>
+
+  </ul>
+</div>
+</p>
+
+<p><%= submit_tag  "Update" %></p>
+
+
+<% end %>
+<% end %>   

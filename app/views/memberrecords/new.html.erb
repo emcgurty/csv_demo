@@ -1,0 +1,104 @@
+<%  if flash[:notice] %>
+<%=  flash[:notice] %>
+<% end %>
+
+<%= form_for(:csv_rec, :url => {:action => 'new'}, :html => {:multipart => true }) do |new_form| %>   
+
+
+<table class=ListComments >
+<tr  >
+<td width="5%"> </td>
+<td width="15%"> </td>
+<td width="15%"> </td>
+<td width="15%"> </td>
+<td width="10%" ></td>
+<td width="10%"></td>
+<td width="20%"></td>
+</tr>
+
+
+<tr  >
+<td width="5%"></td>
+<td colspan=3  class=PetitionTitle >Find CSV File</td>
+<td width="10%"></td>
+<td width="10%"></td>
+<td width="20%"></td>
+</tr>
+
+<tr  >
+<td width="5%"></td>
+<td width="15%"></td>
+<td width="15%"></td>
+<td width="15%"></td>
+<td width="10%"></td>
+<td width="10%"></td>
+<td width="20%"></td>
+</tr>
+
+<tr  >
+<td width="5%"></td>
+ <td width="15%" class=labelg>Choose CSV</td>
+<td width="15%"></td>
+<td width="15%"></td>
+<td width="10%"></td>
+<td width="10%"></td>
+<td width="20%"></td>
+</tr>
+
+<tr  >
+<td width="5%"></td>
+<td width="15%" rowspan=2 valign=top ><%=h new_form.file_field('csv_field') %></td>
+<td width="15%"></td>
+<td width="15%"></td>
+<td width="10%"></td>
+<td width="10%"></td>
+<td width="10%"></td>
+</tr>
+
+
+<tr  >
+<td width="5%"> </td>
+<td width="15%" class=labelg></td>
+<td width="15%"> </td>
+<td width="15%"> </td>
+<td width="10%"></td>
+<td width="10%"></td>
+<td width="20%"></td>
+</tr>
+
+
+
+
+<tr  >
+<td width="5%"> </td>
+<td width="15%"></td>
+<td width="15%"></td>
+<td width="15%"> </td>
+<td width="10%"></td>
+<td width="10%"></td>
+<td width="20%"></td>
+</tr>
+
+<tr  >
+<td width="5%" ></td>
+<td colspan=2 align=left><%= submit_tag  "Post CSV to MySQL", { :class=>"button_style"} %></td>
+<td width="15%"></td>
+<td colspan=2 >Need to introduce performance guage as saving and then emailing will take some time</td>
+<td width="10%" ></td>
+<td width="10%" ></td>
+</tr>
+
+<tr  >
+<td width="5%"> &nbsp;</td>
+<td width="15%"> &nbsp;</td>
+<td width="15%">&nbsp; </td>
+<td width="15%">&nbsp; </td>
+<td width="10%" >&nbsp;</td>
+<td width="10%">&nbsp;</td>
+<td width="10%">&nbsp;</td>
+<td width="10%" >&nbsp;</td>
+</tr>
+
+</table>
+
+<% end %>

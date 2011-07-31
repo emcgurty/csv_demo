@@ -1,0 +1,34 @@
+<% if flash[:notice] %>
+<%= flash[:notice]  -%>
+<% end %>
+
+<% if session[:member_id] %>
+<%= session[:member_id]  -%>
+<% end %>
+
+<%= form_for(:memberorders, :url => {:controller=>'memberrecords', :action => :create, :id=>session[:member_id]}, :html => {:method=>'post'}) do |c| %>   
+	<% @mr = Member.find(:first, :conditions => ['member_id = ?', session[:member_id]])  %>
+	<p><%= c.hidden_field "created_item", {:value=>@mr.created_item} %></p>
+	<p><%= c.text_field "member_name", {:value=>@mr.member_name} %></p>
+	<p><%= c.text_field "member_address", {:value=>@mr.member_address} %></p>
+	<p>
+   	<%  @mysizes = Size.all.collect {|p| [ p.size, p.size_id ] } %>
+   	<div>   
+  	<p>
+    <ul>Check to select polo-shirt item:&nbsp;
+  	<% i =0 %>
+  	<% for shirt in Item.find(:all) %>
+  	<li> <%= check_box_tag "memberrecords[item_id][]", shirt.item_id, false %>&nbsp;
+          <%= shirt.item_description %>&nbsp;&nbsp;
+          <%= select(:size, "size_id" + shirt.item_id.to_s ,  @mysizes, { :prompt => true }) %>
+           <% i = i +1 %>
+        </li>
+	<% end %>
+    </ul>
+    </p>
+	</div>
+	
+
+	<p><%= submit_tag  "Add Items" %></p>
+	<% end %>
+ 
