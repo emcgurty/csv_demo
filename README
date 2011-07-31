@@ -1,0 +1,54 @@
+Demonstrates:
+
+Gathering data from CSV file and porting to MySQL
+Use of has_many and belongs_to
+Providing informative and multiple checboxes with parallel select dropdowns on the same form.  
+Multiple select dropdowns require distinct names...
+Use of singular model names with plural database table names
+In has_many model, set_primary_key is essential for all relevant models, particularly with regard to update_attributes
+Controllers with non-standard action names
+Syntax regarding project name and table names containing an underscore
+
+Created this only in development.
+
+mySQL database: 
+
+DROP TABLE IF EXISTS `csvdemo`.`itemsizes`;
+CREATE TABLE  `csvdemo`.`itemsizes` (
+  `size_id` int(10) unsigned NOT NULL auto_increment,
+  `size` varchar(45) default NULL,
+  PRIMARY KEY  USING BTREE (`size_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `csvdemo`.`memberrecords`;
+CREATE TABLE  `csvdemo`.`memberrecords` (
+  `memberrecords_id` int(11) default NULL,
+  `member_name` varchar(100) default NULL,
+  `member_email` varchar(100) default NULL,
+  `member_address` varchar(100) default NULL,
+  `member_address_alternative` varchar(100) default NULL,
+  `use_alternate` tinyint(1) default '0',
+  `rand_password` varchar(36) default NULL,
+  `encrypted_password` varchar(36) default NULL,
+  `csv_field` varchar(255) default NULL,
+  `member_id` int(10) unsigned NOT NULL auto_increment,
+  `created_item` int(10) unsigned default '0',
+  PRIMARY KEY  (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `csvdemo`.`memberrecords_shirtitems`;
+CREATE TABLE  `csvdemo`.`memberrecords_shirtitems` (
+  `memberrecords_id` int(11) NOT NULL auto_increment,
+  `item_id` int(11) default NULL,
+  `member_id` int(11) default '0',
+  `size_id` int(11) default NULL,
+  PRIMARY KEY  (`memberrecords_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `csvdemo`.`shirtitems`;
+CREATE TABLE  `csvdemo`.`shirtitems` (
+  `shirtitems_id` int(11) default NULL,
+  `item_description` varchar(100) default NULL,
+  `item_id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
